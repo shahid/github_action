@@ -8,18 +8,104 @@ on:
   workflow_dispatch:
     # Inputs the workflow accepts.
     inputs:
-      name:
+      stack_name:
         # Friendly description to be shown in the UI instead of 'name'
-        description: 'Person to greet'
+        description: 'CloudFormation stack name'
         # Default value if no value is explicitly provided
-        default: 'World'
+        default: 'stage-callibrate-ecs-fargate'
         # Input has to be provided for the workflow to run
         required: true
 
-      command:
-        description: 'ECS Task Definition Command'
+      template-url:
+        description: 'CloudFormation template S3 http path'
+        default: 'http://cloudformation/template/cfn-development-calibrate-ecs-fargate.yaml'
+        required: true
+
+      AppEnv:
+        description: 'ENV Value'
+        default: 'staging'
+        required: true
+
+      ContainerPort:
+        description: 'Container Port'
+        default: 9002
+        required: true
+
+      DdServiceName:
+        description: 'DD_SERVICE_NAME Value'
+        default: 'calibrate-webapi'
+        required: true
+
+      DdTraceGlobalTags:
+        description: 'DD_TRACE_GLOBAL_TAGS'
+        default: 'env:stage'
+        required: true
+
+      ECSCluster:
+        description: 'ECSCluster Value'
+        default: 'stage-wco-useast2'
+        required: true
+
+      ImageName:
+        description: 'ECR Repo ImageName'
+        default: 'c128500903700.dkr.ecr.us-east-2.amazonaws.com/stage-wco-useast2-api'
+        required: true
+
+      ImageTag:
+        description: 'Docker IMAGE tag'
+        default: 'latest'
+        required: true
+
+      SubnetA:
+        description: 'Subnet A'
+        default: 'subnet-08426bbc8c70f889e'
+        required: true
+
+      SubnetB:
+        description: 'Subnet B'
+        default: 'subnet-088713193c7ae2564'
+        required: true
+
+      TaskRole:
+        description: 'TaskRole'
+        default: 'ecsTaskExecutionRole'
+        required: true
+
+      VpcId:
+        description: 'VPC ID'
+        default: 'vpc-094d6253b54ac790e'
+        required: true
+
+      CommandToRun:
+        description: 'Command to in ECS container'
         default: 'test'
         required: true
+
+      ContainerCPUReservation::
+        description: 'ECS Container CPU'
+        default: 1024
+        required: true
+
+      ContainerMemoryReservation:
+        description: 'ECS Container Memory'
+        default: 2048
+        required: true
+
+      FGSecurityGroup:
+        description: 'Fargate Security Group-1'
+        default: 'sg-0431f0ebdcf3e49b8'
+        required: true
+
+      FGServiceName:
+        description: 'Fargate Service Name'
+        default: 'stage-wco-useast2-api-service'
+        required: true
+
+      FGTaskCount:
+        description: 'Desired Number of Task'
+        default: 1
+        required: true
+
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -32,6 +118,6 @@ jobs:
     steps:
     # Runs a single command using the runners shell
     - name: Send greeting
-      run: echo "Hello ${{ github.event.inputs.name }}"
+      run: echo "Hello ${{ github.event.inputs.stack_name }}"
     - name: Cloudformation command
-      run: echo "aws cloudformation create-stack --region $AWS_REGION --stack-name  cfn-$AWS_ECR_REPO --template-body s3://cloudformationstack/cfn-ecs-task-definition.yml --parameters ParameterKey=Command,ParameterValue=${{ github.event.inputs.command }}"
+      run: echo "aws cloudformation create-stack --region us-east-2 --stack-name  cfn-${{ stack_name }} --template-body file://Work/NetworkRedux/Clients/Calibrate/aws/cloudformation_template/cfn-development-calibrate-ecs-fargate.yaml  --parameters ParameterKey=AppEnv,ParameterValue=ENV ParameterKey=AppEnvVal,ParameterValue=staging ParameterKey=ContainerPort,ParameterValue=9002 ParameterKey=HostPort,ParameterValue=9002 ParameterKey=DdServiceNameEnv,ParameterValue=DD_SERVICE_NAME ParameterKey=DdServiceNameVal,ParameterValue=calibrate-webapi ParameterKey=DdTraceGlobalTagsEnv,ParameterValue=DD_TRACE_GLOBAL_TAGS ParameterKey=DdTraceGlobalTagsVal,ParameterValue=env:stage ParameterKey=ECSCluster,ParameterValue=stage-wco-useast2 ParameterKey=ImageName,ParameterValue=128500903700.dkr.ecr.us-east-2.amazonaws.com/stage-wco-useast2-api ParameterKey=ImageTag,ParameterValue=6aeef39 ParameterKey=SubnetA,ParameterValue=subnet-08426bbc8c70f889e ParameterKey=SubnetB,ParameterValue=subnet-088713193c7ae2564 ParameterKey=TaskRole,ParameterValue=ecsTaskExecutionRole ParameterKey=VpcId,ParameterValue=vpc-094d6253b54ac790e ParameterKey=WcoApiCommand,ParameterValue=redux_test ParameterKey=WcoApiContainerCPUReservation,ParameterValue=1024 ParameterKey=WcoApiContainerMemoryReservation,ParameterValue=2048 ParameterKey=WcoApiFGSecurityGroup,ParameterValue=sg-0431f0ebdcf3e49b8 ParameterKey=WcoApiFGServiceName,ParameterValue=stage-wco-useast2-api-tg2 ParameterKey=WcoApiFGTaskCount,ParameterValue=1 --capabilities CAPABILITY_NAMED_IAM"
