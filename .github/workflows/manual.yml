@@ -16,14 +16,14 @@ on:
         # Input has to be provided for the workflow to run
         required: true
 
-      template-url:
-        description: 'CloudFormation template S3 http path'
-        default: 'http://cloudformation/template/cfn-development-calibrate-ecs-fargate.yaml'
-        required: true
+      #template-url:
+      #  description: 'CloudFormation template S3 http path'
+      #  default: 'http://cloudformation/template/cfn-development-calibrate-ecs-fargate.yaml'
+      #  required: true
 
       AppEnv:
         description: 'ENV Value'
-        default: 'staging'
+        default: 'stage'
         required: true
 
       ContainerPort:
@@ -31,10 +31,10 @@ on:
         default: 9002
         required: true
 
-      DdServiceName:
-        description: 'DD_SERVICE_NAME Value'
-        default: 'calibrate-webapi'
-        required: true
+      #DdServiceName:
+      #  description: 'DD_SERVICE_NAME Value'
+      #  default: 'calibrate-webapi'
+      #  required: true
 
       DdTraceGlobalTags:
         description: 'DD_TRACE_GLOBAL_TAGS'
