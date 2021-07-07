@@ -46,35 +46,35 @@ on:
         default: 'stage-wco-useast2'
         required: true
 
-      ImageName:
-        description: 'ECR Repo ImageName'
-        default: 'c128500903700.dkr.ecr.us-east-2.amazonaws.com/stage-wco-useast2-api'
-        required: true
+      #ImageName:
+      #  description: 'ECR Repo ImageName'
+      #  default: 'c128500903700.dkr.ecr.us-east-2.amazonaws.com/stage-wco-useast2-api'
+      #  required: true
 
       ImageTag:
         description: 'Docker IMAGE tag'
         default: 'latest'
         required: true
 
-      SubnetA:
-        description: 'Subnet A'
-        default: 'subnet-08426bbc8c70f889e'
-        required: true
+      #SubnetA:
+      #  description: 'Subnet A'
+      #  default: 'subnet-08426bbc8c70f889e'
+      #  required: true
 
-      SubnetB:
-        description: 'Subnet B'
-        default: 'subnet-088713193c7ae2564'
-        required: true
+      #SubnetB:
+      #  description: 'Subnet B'
+      #  default: 'subnet-088713193c7ae2564'
+      #  required: true
 
-      TaskRole:
-        description: 'TaskRole'
-        default: 'ecsTaskExecutionRole'
-        required: true
+      #TaskRole:
+      #  description: 'TaskRole'
+      #  default: 'ecsTaskExecutionRole'
+      #  required: true
 
-      VpcId:
-        description: 'VPC ID'
-        default: 'vpc-094d6253b54ac790e'
-        required: true
+      #VpcId:
+      #  description: 'VPC ID'
+      #  default: 'vpc-094d6253b54ac790e'
+      #  required: true
 
       CommandToRun:
         description: 'Command to in ECS container'
@@ -91,15 +91,15 @@ on:
         default: 2048
         required: true
 
-      FGSecurityGroup:
-        description: 'Fargate Security Group-1'
-        default: 'sg-0431f0ebdcf3e49b8'
-        required: true
+      #FGSecurityGroup:
+      #  description: 'Fargate Security Group-1'
+      #  default: 'sg-0431f0ebdcf3e49b8'
+      #  required: true
 
-      FGServiceName:
-        description: 'Fargate Service Name'
-        default: 'stage-wco-useast2-api-service'
-        required: true
+      #FGServiceName:
+      #  description: 'Fargate Service Name'
+      #  default: 'stage-wco-useast2-api-service'
+      #  required: true
 
       FGTaskCount:
         description: 'Desired Number of Task'
