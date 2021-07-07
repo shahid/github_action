@@ -16,6 +16,11 @@ on:
         # Input has to be provided for the workflow to run
         required: true
 
+      command:
+        description: 'ECS Task Definition Command'
+        default: 'test'
+        required: true
+
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "greet"
@@ -28,3 +33,5 @@ jobs:
     # Runs a single command using the runners shell
     - name: Send greeting
       run: echo "Hello ${{ github.event.inputs.name }}"
+    - name: Cloudformation command
+      run: echo "aws cloudformation create-stack --region $AWS_REGION --stack-name  cfn-$AWS_ECR_REPO --template-body s3://cloudformationstack/cfn-ecs-task-definition.yml --parameters ParameterKey=Command,ParameterValue=${{ github.event.inputs.command }}"
