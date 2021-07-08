@@ -81,7 +81,7 @@ on:
         default: 'test'
         required: true
 
-      ContainerCPUReservation::
+      ContainerCPUReservation:
         description: 'ECS Container CPU'
         default: 1024
         required: true
